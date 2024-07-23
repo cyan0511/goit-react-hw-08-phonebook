@@ -2,7 +2,7 @@ import css from './ContactListItem.module.css';
 import { useState } from 'react';
 import { clsx } from 'clsx';
 import { useDispatch } from 'react-redux';
-import { deleteContact } from '../../redux/operations';
+import { deleteContact } from '../../store/operations';
 
 export const ContactListItem = ({ contact }) => {
   const dispatch = useDispatch();
