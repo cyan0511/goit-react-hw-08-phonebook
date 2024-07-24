@@ -1,18 +1,21 @@
 import css from './ContactForm.module.css';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getContacts } from '../../store/selectors';
-import { addContact } from '../../store/operations';
+import { getContacts } from '../../store/contacts/selectors';
+import { addContact, updateContact } from '../../store/contacts/operations';
+import { Button, TextField } from '@mui/material';
+import { AddBox, ContactPhone, SaveOutlined } from '@mui/icons-material';
+import { Notify } from 'notiflix';
 
-export const ContactForm = () => {
+export const ContactForm = ({contact}) => {
   const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
 
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const [name, setName] = useState(contact?.name);
+  const [number, setNumber] = useState(contact?.number);
 
   const handleNameChange = e => {
-    setName(e.target.value);
+    setName(toProperCase(e.target.value));
   };
 
   const handleNumberChange = e => {
@@ -28,56 +31,81 @@ export const ContactForm = () => {
       return;
     }
 
-    const existingContact = contacts.find(
-      contact => contact.name.toLowerCase() === name.toLowerCase()
+    const existingContact = contacts.some(
+      c => c.name.toLowerCase() === name.toLowerCase()
+      && (contact?.id ? c.id !== contact.id : true)
     );
 
     if (existingContact) {
-      alert(`${name} is already in contacts`);
+      Notify.failure(`${name} is already in contacts`);
       return;
     }
 
-    dispatch(addContact({ name, number }));
-
-    setName('');
-    setNumber('');
+    if (contact?.id) {
+      // update
+      dispatch(updateContact({ id: contact.id, name, number }));
+    } else {
+      // new
+      dispatch(addContact({ name, number }));
+      setName('');
+      setNumber('');
+    }
   };
+
+  const toProperCase = name => {
+    return name.split(' ').map(word => {
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    }).join(' ');
+  }
 
     return (
       <div className={css['contact-form']}>
-      <form  onSubmit={handleSubmit}>
-        <label>
-          <p>Name</p>
-          <input
-            type="text"
-            name="name"
-            // add \ before - in [' \-] to make it work (LMS)
-            pattern="^[a-zA-Zа-яА-Я]+(([' \-][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan."
-            required
-            //must have value prop when onChange prop is used
-            value={name}
-            onChange={handleNameChange}
-          />
-        </label>
+        <form  onSubmit={handleSubmit}>
+          <ContactPhone sx={{ fontSize: 50, my: 0.5 }} />
+            <TextField
+              variant="standard"
+              label="Name"
+              type="text"
+              name="name"
+              // add \ before - in [' \-] to make it work (LMS)
+              inputProps={{
+                pattern:"^[a-zA-Zа-яА-Я]+(([' \\-][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$",
+                title: "Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan."}}
+              required
+              //must have value prop when onChange prop is used
+              value={name}
+              onChange={handleNameChange}
+            />
 
-        <label>
-          <p>Number</p>
-          <input
-            type="tel"
-            name="number"
-            // add \ before - in [\-.\s] to make it work (LMS)
-            pattern="\+?\d{1,4}?[\-.\s]?\(?\d{1,3}?\)?[\-.\s]?\d{1,4}[\-.\s]?\d{1,4}[\-.\s]?\d{1,9}"
-            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-            required
-            //must have value prop when onChange prop is used
-            value={number}
-            onChange={handleNumberChange}
-          />
-        </label>
+            <TextField
+              variant="standard"
+              type="tel"
+              label="Number"
+              name="number"
+              // add \ before - in [\-.\s] to make it work (LMS)
+              pattern="\+?\d{1,4}?[\-.\s]?\(?\d{1,3}?\)?[\-.\s]?\d{1,4}[\-.\s]?\d{1,4}[\-.\s]?\d{1,9}"
+              inputProps={{
+                pattern: "\\+?\\d{1,4}?[\\-.\\s]?\\(?\\d{1,3}?\\)?[\\-.\\s]?\\d{1,4}[\\-.\\s]?\\d{1,4}[\\-.\\s]?\\d{1,9}",
+                title:"Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+              }}
 
-        <button type="submit">Add Contact</button>
-      </form>
+              required
+              //must have value prop when onChange prop is used
+              value={number}
+              onChange={handleNumberChange}
+            />
+
+            <Button variant="outlined" style={{ gap: 5 }} type="submit">
+              {contact?.id ? (
+                <>
+                  <SaveOutlined />
+                  Update Contact
+                </>) : (<>
+                <AddBox/>
+                Add Contact
+              </>) }
+            </Button>
+        </form>
       </div>
     );
 }

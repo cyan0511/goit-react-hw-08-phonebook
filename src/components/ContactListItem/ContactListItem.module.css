@@ -1,7 +1,7 @@
 .contact-list-item {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 0;
   gap: 30px;
   width: 650px;
   padding: 5px;
@@ -9,18 +9,21 @@
 }
 
 .contact-list-item:nth-child(even) {
-  background-color: #e0e0e0;
-  border-radius: 5px;
+  background-color: #ececec;
+  border-radius: 3px;
 }
 
 .contact-list-item:hover {
-  background-color: #e84f20;
-  color: #f6f6f6;
-  border-radius: 5px;
+  background-color: rgb(185, 185, 185);
+  color: #ffffff;
+  border-radius: 3px;
+  font-weight: bold;
 }
 
 .contact-list-item p {
   width: 300px;
+  color: unset;
+  font-size: 16px;
 }
 
 .fade-out {

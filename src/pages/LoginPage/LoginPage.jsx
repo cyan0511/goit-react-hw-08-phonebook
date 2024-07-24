@@ -7,7 +7,9 @@ const LoginPage = () => {
       <Helmet>
         <title>Login</title>
       </Helmet>
-      <LoginForm />
+      <div className="form-container">
+        <LoginForm />
+      </div>
     </HelmetProvider>
   );
 };

@@ -7,9 +7,11 @@ const RegisterPage = () => {
       <Helmet>
         <title>Registration</title>
       </Helmet>
-      <RegisterForm />
+      <div className="form-container">
+        <RegisterForm />
+      </div>
     </HelmetProvider>
-  );
+);
 };
 
 export default RegisterPage;

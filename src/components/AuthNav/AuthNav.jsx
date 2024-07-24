@@ -1,5 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import css from './AuthNav.module.css';
+import { AppRegistration, Login } from '@mui/icons-material';
+import { Button } from '@mui/material';
 
 export const AuthNav = () => {
   return (
@@ -8,13 +10,19 @@ export const AuthNav = () => {
         to="/register"
         className={({ isActive }) => (isActive ? css.linkActive : css.link)}
       >
-        Register
+        <Button>
+          <AppRegistration/>
+          Register
+        </Button>
       </NavLink>
       <NavLink
         to="/login"
         className={({ isActive }) => (isActive ? css.linkActive : css.link)}
       >
-        Log In
+        <Button>
+          <Login />
+          Log In
+        </Button>
       </NavLink>
     </nav>
   );

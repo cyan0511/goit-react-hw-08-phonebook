@@ -1,9 +1,13 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logIn } from '../../store/auth/authOperations';
 import css from './LoginForm.module.css';
+import { Button, TextField } from '@mui/material';
+import { AccountCircle } from '@mui/icons-material';
+import { getAuthError } from '../../store/auth/authSelectors';
 
 export const LoginForm = () => {
   const dispatch = useDispatch();
+  const error = useSelector(getAuthError);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -17,17 +21,31 @@ export const LoginForm = () => {
     form.reset();
   };
 
+  /* useEffect(() => {
+    if (error) {
+      Notify.failure('Login failed.');
+    }
+  }, [error]); */
+
   return (
-    <form className={css.form} onSubmit={handleSubmit} autoComplete="off">
-      <label className={css.label}>
-        Email
-        <input type="email" name="email" />
-      </label>
-      <label className={css.label}>
-        Password
-        <input type="password" name="password" />
-      </label>
-      <button type="submit">Log In</button>
-    </form>
+    <div className={css['login-container']}>
+      <AccountCircle sx={{ fontSize: '150px' }} />
+      <form className={css.form} onSubmit={handleSubmit} autoComplete="off">
+        <TextField
+          label="Email"
+          variant="standard"
+          type="email"
+          name="email" />
+        <TextField
+          label="Password"
+          variant="standard"
+          type="password"
+          name="password" />
+
+        {error ? <span className={css.error}>Login failed!</span> : null}
+
+        <Button type="submit" variant="outlined">Log In</Button>
+      </form>
+    </div>
   );
 };

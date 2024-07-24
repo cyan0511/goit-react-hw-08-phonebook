@@ -6,7 +6,7 @@ const Loader = () => {
   return (
     <div className={styles.Loader}>
       <div className={styles.loaderBox}>
-        <TailSpin color="#e84f20" strokeWidth={7} height={150} width={150} />
+        <TailSpin color="#e84f20" strokeWidth={4} height={150} width={150} />
       </div>
     </div>
   );

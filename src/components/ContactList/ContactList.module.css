@@ -1,11 +1,12 @@
 .contact-list {
   align-items: center;
   background-color: #f6f6f6;
-  border-radius: 5px;
-  box-shadow: 0 1px 5px 2px hsla(48, 52%, 94%, .7);
+  border-radius: 4px;
+  box-shadow: 0 1px 1px 1px hsl(0, 0%, 93%);
   display: flex;
   font-size: 20px;
   width: 650px;
   padding: 15px;
-  color: #090606;
+  color: #252525;
+  border: #b4b4b4 solid 1px;
 }
