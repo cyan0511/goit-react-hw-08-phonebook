@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { getFilter } from '../../store/contacts/selectors';
 import { setFilter } from '../../store/filterSlice';
-import { TextField } from '@mui/material';
+import { InputAdornment, TextField } from '@mui/material';
+import { FindInPageOutlined } from '@mui/icons-material';
 
 export const Filter = () => {
   const dispatch = useDispatch();
@@ -25,6 +26,13 @@ export const Filter = () => {
 
       <div style={{ width: '100%' }}>
         <TextField
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <FindInPageOutlined />
+              </InputAdornment>
+            ),
+          }}
           sx={{ width: '100%' }}
           variant="outlined"
           label={`Find contacts`}

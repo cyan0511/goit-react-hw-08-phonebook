@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { logIn } from '../../store/auth/authOperations';
 import css from './LoginForm.module.css';
-import { Button, TextField } from '@mui/material';
-import { AccountCircle } from '@mui/icons-material';
+import { Button, InputAdornment, TextField } from '@mui/material';
+import { AccountCircle, EmailOutlined, LockOutlined } from '@mui/icons-material';
 import { getAuthError } from '../../store/auth/authSelectors';
 
 export const LoginForm = () => {
@@ -32,11 +32,25 @@ export const LoginForm = () => {
       <AccountCircle sx={{ fontSize: '150px' }} />
       <form className={css.form} onSubmit={handleSubmit} autoComplete="off">
         <TextField
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <EmailOutlined />
+              </InputAdornment>
+            ),
+          }}
           label="Email"
           variant="standard"
           type="email"
           name="email" />
         <TextField
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <LockOutlined />
+              </InputAdornment>
+            ),
+          }}
           label="Password"
           variant="standard"
           type="password"

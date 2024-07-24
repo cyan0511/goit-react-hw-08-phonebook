@@ -3,8 +3,14 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContacts } from '../../store/contacts/selectors';
 import { addContact, updateContact } from '../../store/contacts/operations';
-import { Button, TextField } from '@mui/material';
-import { AddBox, ContactPhone, SaveOutlined } from '@mui/icons-material';
+import { Button, InputAdornment, TextField } from '@mui/material';
+import {
+  AddBoxOutlined,
+  ContactPhone,
+  PersonOutline,
+  PhoneOutlined,
+  SaveOutlined,
+} from '@mui/icons-material';
 import { Notify } from 'notiflix';
 
 export const ContactForm = ({contact}) => {
@@ -44,6 +50,7 @@ export const ContactForm = ({contact}) => {
     if (contact?.id) {
       // update
       dispatch(updateContact({ id: contact.id, name, number }));
+
     } else {
       // new
       dispatch(addContact({ name, number }));
@@ -63,6 +70,13 @@ export const ContactForm = ({contact}) => {
         <form  onSubmit={handleSubmit}>
           <ContactPhone sx={{ fontSize: 50, my: 0.5 }} />
             <TextField
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <PersonOutline />
+                  </InputAdornment>
+                ),
+              }}
               variant="standard"
               label="Name"
               type="text"
@@ -78,6 +92,13 @@ export const ContactForm = ({contact}) => {
             />
 
             <TextField
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <PhoneOutlined />
+                  </InputAdornment>
+                ),
+              }}
               variant="standard"
               type="tel"
               label="Number"
@@ -101,7 +122,7 @@ export const ContactForm = ({contact}) => {
                   <SaveOutlined />
                   Update Contact
                 </>) : (<>
-                <AddBox/>
+                <AddBoxOutlined/>
                 Add Contact
               </>) }
             </Button>

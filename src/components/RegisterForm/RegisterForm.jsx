@@ -1,9 +1,10 @@
 import { useDispatch } from 'react-redux';
 import { register } from '../../store/auth/authOperations';
 import css from './RegisterForm.module.css';
-import { Button, TextField } from '@mui/material';
+import { Button, InputAdornment, TextField } from '@mui/material';
 import {
-  EditNote
+  AccountBoxOutlined,
+  EditNote, EmailOutlined, LockOutlined,
 } from '@mui/icons-material';
 
 export const RegisterForm = () => {
@@ -27,17 +28,38 @@ export const RegisterForm = () => {
       <EditNote sx={{ fontSize: '150px' }} />
       <form onSubmit={handleSubmit} autoComplete="off">
         <TextField
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <AccountBoxOutlined />
+              </InputAdornment>
+            ),
+          }}
           variant="standard"
           label="User Name"
           type="text"
           name="name" />
 
           <TextField
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <EmailOutlined />
+                </InputAdornment>
+              ),
+            }}
             variant="standard"
             label="Email"
             type="email"
             name="email" />
           <TextField
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <LockOutlined />
+                </InputAdornment>
+              ),
+            }}
             variant="standard"
             label="Password"
             type="password"
